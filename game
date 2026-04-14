@@ -1,0 +1,60 @@
+import tkinter as tk
+import random
+root = tk.Tk()
+root.title("界面")
+root.geometry("600x600+300+200")
+root.configure(background="blue")
+root.resizable(False, False)
+frame=tk.Frame(root,bg="white")
+frame.pack(padx=0,pady=0,fill="y",expand=True)
+label=tk.Label(frame,text="是否开始游戏？",font=("Arial",40,"bold"),bg="white",fg="black")
+label.pack(padx=10,pady=100)
+def ok_info():
+    """游戏运行"""
+    answer = random.randint(0, 101)
+    top = tk.Toplevel(root)
+    top.configure(background="blue")
+    top.title("猜数字游戏")
+    top.geometry("600x600+300+200")
+    top.resizable(False, False)
+    label1 = tk.Label(top, text="请输入数字：", font=("Arial", 20, "bold"), fg="black", bg="white", width=25)
+    label1.pack(padx=20, pady=30)
+    entry1 = tk.Entry(top, width=20, font=("Arial", 20, "bold"), fg="black", bg="white")
+    entry1.pack(padx=40, pady=40)
+    def click_info():
+        """开始功能"""
+        try:
+            num = int(entry1.get())
+        except ValueError:
+            label1.config(text="输入类型不对！")
+            return
+        if num == answer:
+            label1.config(text="恭喜你，猜对了！")
+        elif num < answer:
+            label1.config(text="猜小了！")
+        elif num > answer:
+            label1.config(text="猜大了！")
+        else:
+            label1.config(text="数据异常！请重新输入！")
+    def clear_info():
+        """清零功能"""
+        entry1.delete(0, 'end')
+    def restart_info():
+        """重新开始功能"""
+        label1.config(text="请输入数字")
+        return ok_info()
+    #游戏设置按钮
+    btn1 = tk.Button(top, text="确定", command=click_info, font=("Arial", 20, "bold"), fg="black", bg="white")
+    btn1.pack(padx=100, pady=45)
+    btn2 = tk.Button(top, text="清零", command=clear_info, font=("Arial", 20, "bold"), fg="black", bg="white")
+    btn2.pack(padx=100, pady=0)
+    btn3 = tk.Button(top, text="重新开始", command=restart_info, font=("Arial", 20, "bold"), fg="black", bg="white")
+    btn3.pack(padx=100, pady=55)
+    btn4 = tk.Button(top, text="退出", command=top.destroy, font=("Arial", 20, "bold"), fg="black", bg="white")
+    btn4.pack(padx=100, pady=0)
+#开始按钮
+btn0=tk.Button(frame,text="确定",command=ok_info,font=("Arial",20,"bold"))
+btn0.pack(padx=10,pady=100)
+btn00=tk.Button(frame,text="退出",command=root.destroy,font=("Arial",20,"bold"))
+btn00.pack(padx=10,pady=0)
+root.mainloop()
